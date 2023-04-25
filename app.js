@@ -58,7 +58,6 @@ app.get("/search", (req, res)=>{
     return element.name.toLowerCase().includes(keywordLower) ||
     element.name_en.toLowerCase().includes(keywordLower)
   })
-  console.log(searchResults)
 
   //複製一個自己的setting
   //但是不能複製nest的object要小心
