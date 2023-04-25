@@ -1,11 +1,9 @@
 # RestaurantMenu
 
 ## 專案畫面
----
 ![](./public/image/demo.gif)
 
 ## Features - 產品功能
----
 
 紀錄屬於自己的餐廳清單，可以瀏覽餐廳、查看詳細資訊、甚至連結到地圖。
 功能
@@ -16,7 +14,6 @@
 - 搜尋失敗產生特殊doge網頁
 
 ## Environment SetUp - 環境建置
----
 - Node.js 18.16.0
 - Express 4.18.2
 - Express-Handlebars 7.0.7
@@ -24,7 +21,6 @@
 - Font-awesome 6.4.0
 
 ## Installing - 專案安裝流程
----
 
 1. 請先確認有安裝 node.js 與 npm
 2. 創造一個專案資料夾，打開您的 terminal，使用`cd`指令進入您剛創建的資料夾
@@ -50,7 +46,6 @@
     ```
 
 ## 開發人員
----
 - TinyMurky
 - Alpha Camp
 
