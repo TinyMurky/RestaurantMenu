@@ -58,13 +58,20 @@ app.get("/search", (req, res)=>{
     return element.name.toLowerCase().includes(keywordLower) ||
     element.name_en.toLowerCase().includes(keywordLower)
   })
+  console.log(searchResults)
 
   //複製一個自己的setting
   //但是不能複製nest的object要小心
   const searchSetting = {...setting.index}
   searchSetting.restaurantList = searchResults
   searchSetting.keyword = keyword
-  res.status(200).render("index", searchSetting)
+
+  if(searchResults.length) {
+    res.status(200).render("index", searchSetting)
+  } else{
+    //if searchResults裡面是空的跑這行
+    res.status(200).render("emptySearch", searchSetting)
+  }
 })
 
 app.listen(port, hostname, ()=>{
