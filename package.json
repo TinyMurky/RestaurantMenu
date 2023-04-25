@@ -1,0 +1,21 @@
+{
+  "name": "restuarantmenu",
+  "version": "1.0.0",
+  "description": "Resturant Menu for Alpha Camp 2_3 S2 Homework",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TinyMurky/RestuarantMenu.git"
+  },
+  "author": "TinyMurky",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TinyMurky/RestuarantMenu/issues"
+  },
+  "homepage": "https://github.com/TinyMurky/RestuarantMenu#readme"
+}
