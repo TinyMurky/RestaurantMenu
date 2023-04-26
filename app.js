@@ -7,6 +7,7 @@ const exphbs = require("express-handlebars")
 
 //setup json
 const restaurant = require("./restaurant.json")
+const { includes } = require("../../../../fontawesome-free-6.3.0-web/js/v4-shims")
 
 //setip port and hostname
 const port = 3000
@@ -56,7 +57,8 @@ app.get("/search", (req, res)=>{
   console.log(keywordLower)
   const searchResults = restaurant.results.filter(element=>{
     return element.name.toLowerCase().includes(keywordLower) ||
-    element.name_en.toLowerCase().includes(keywordLower)
+    element.name_en.toLowerCase().includes(keywordLower) ||
+    element.category.toLowerCase().includes(keywordLower) //search by category
   })
 
   //複製一個自己的setting
