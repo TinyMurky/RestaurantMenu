@@ -7,7 +7,6 @@ const exphbs = require("express-handlebars")
 
 //setup json
 const restaurant = require("./restaurant.json")
-const { includes } = require("../../../../fontawesome-free-6.3.0-web/js/v4-shims")
 
 //setip port and hostname
 const port = 3000
