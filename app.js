@@ -1,6 +1,7 @@
 //express setup
 const express = require("express")
 const app = express()
+
 //handlebars setup
 const exphbs = require("express-handlebars")
 //Setting MongoDB Connection
@@ -32,14 +33,21 @@ const setting = {
     restaurantList: null,
     targetRest: null,
   },
+  new: {
+    title: "創造您的餐廳",
+    stylesheet: "new.css",
+    js: "new.js",
+    targetRest: null,
+  },
 }
 
 // handlebar setting
 app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }))
 app.set("view engine", "handlebars")
 
+//app use static and urlencoded
 app.use(express.static("public"))
-
+app.use(express.urlencoded({ extended: true }))
 //db connection Listener
 db.on("error", (error) => console.error(error))
 db.once("open", () => console.log("MongoDB connected currectly."))
@@ -52,6 +60,42 @@ app.get("/", (req, res) => {
       return (setting.index.restaurantList = restaurants)
     })
     .then(() => res.status(200).render("index", setting.index))
+    .catch((error) => console.error(error))
+})
+
+//Add New Restaurant
+//要放在"/restaurants/:id"之前，不然express會以為new是數字
+app.get("/restaurants/new", (req, res) => {
+  res.render("new", setting.new)
+})
+
+app.post("/restaurants", (req, res) => {
+  const data = req.body
+  console.log(data)
+  return Restaurant.find()
+    .sort({ _id: -1 })
+    .limit(1)
+    .lean()
+    .then((items) => {
+      const newID = items.length ? Number(items[0]["_id"]) + 1 : 1
+      console.log(`New ID is : ${newID}`)
+      const newRest = new Restaurant({
+        _id: newID,
+        name: String(data.name),
+        name_en: String(data.name_en),
+        name_en_lowercase: String(data.name_en).toLowerCase(),
+        category: String(data.category),
+        category_lowercase: String(data.category).toLowerCase(),
+        image: String(data.image),
+        location: String(data.location),
+        phone: String(data.phone),
+        google_map: String(data.google_map),
+        rating: Number(data.rating),
+        description: String(data.description),
+      })
+      newRest.save()
+    })
+    .then(() => res.redirect("/")) //用新的then才可以在確定新增之後才redirect渲染
     .catch((error) => console.error(error))
 })
 
@@ -75,6 +119,27 @@ app.get("/restaurants/:id", (req, res) => {
     })
 })
 
+//Edit
+
+app.get("/restaurants/:id/edit", (req, res) => {
+  const targetID = req.params.id
+  const editSetting = { ...setting.new }
+  return Restaurant.findById(targetID)
+    .lean()
+    .then((targetRest) => {
+      if (targetRest) {
+        editSetting.targetRest = targetRest
+        editSetting.title = "編輯餐廳"
+        return res.status(200).render("edit", editSetting)
+      } else {
+        throw new Error("Restaurant not found")
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+      return res.status(404).send("<h1>404 Restaurant Not Found</h1>")
+    })
+})
 //搜尋功能
 app.get("/search", (req, res) => {
   const keyword = req.query.keyword
