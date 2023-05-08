@@ -164,6 +164,17 @@ app.post("/restaurants/:id/edit", (req, res) => {
     .catch((error) => console.error(error))
 })
 
+//delete restaurant
+app.post("/restaurants/:id/delete", (req, res) => {
+  const ID = req.params.id
+  return Restaurant.findById(ID)
+    .then((targetRest) => {
+      targetRest.deleteOne()
+    })
+    .then(() => res.redirect("/")) //用新的then才可以在確定新增之後才redirect渲染
+    .catch((error) => console.error(error))
+})
+
 //搜尋功能
 app.get("/search", (req, res) => {
   const keyword = req.query.keyword
