@@ -21,7 +21,9 @@ db.once("open", () => {
       _id: rest.id,
       name: rest.name,
       name_en: rest.name_en,
+      name_en_lowercase: rest.name_en.toLowerCase(),
       category: rest.category,
+      category_lowercase: rest.category.toLowerCase(),
       image: rest.image,
       location: rest.location,
       phone: rest.phone,
@@ -31,4 +33,7 @@ db.once("open", () => {
     })
   }
   console.log("done")
+  process.on("exit", function (code) {
+    return console.log(`exiting the code implicitly ${code}`)
+  })
 })
