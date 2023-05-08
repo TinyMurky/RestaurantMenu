@@ -119,8 +119,8 @@ app.get("/restaurants/:id", (req, res) => {
     })
 })
 
-//Edit
-
+//Edit restaurant
+//Render edit page
 app.get("/restaurants/:id/edit", (req, res) => {
   const targetID = req.params.id
   const editSetting = { ...setting.new }
@@ -140,6 +140,30 @@ app.get("/restaurants/:id/edit", (req, res) => {
       return res.status(404).send("<h1>404 Restaurant Not Found</h1>")
     })
 })
+
+//Update edit
+app.post("/restaurants/:id/edit", (req, res) => {
+  const ID = req.params.id
+  const data = req.body
+  const update = {
+    _id: ID,
+    name: String(data.name),
+    name_en: String(data.name_en),
+    name_en_lowercase: String(data.name_en).toLowerCase(),
+    category: String(data.category),
+    category_lowercase: String(data.category).toLowerCase(),
+    image: String(data.image),
+    location: String(data.location),
+    phone: String(data.phone),
+    google_map: String(data.google_map),
+    rating: Number(data.rating),
+    description: String(data.description),
+  }
+  return Restaurant.findByIdAndUpdate(ID, update)
+    .then(() => res.redirect("/")) //用新的then才可以在確定新增之後才redirect渲染
+    .catch((error) => console.error(error))
+})
+
 //搜尋功能
 app.get("/search", (req, res) => {
   const keyword = req.query.keyword

@@ -6,9 +6,9 @@
     <div class="col-12 col-lg-10 col-xl-8 mx-auto">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">創造您的餐廳</h5>
+          <h5 class="card-title">編輯您的餐廳</h5>
           <hr>
-          <form method="POST" action="/restaurants" class="needs-validation" novalidate>
+          <form method="POST" action="/restaurants/{{targetRest._id}}/edit" class="needs-validation" novalidate>
 
             <!--Name-->
             <div class="row mb-3 g-2">
@@ -16,7 +16,7 @@
                   Name
               </label>
               <div class="col-md-8">
-                <input type="text" name="name" class="form-control" id="name" min="" max="" placeholder="[Required]: Name is required" value="" required>
+                  <input type="text" name="name" class="form-control" id="name" min="" max="" placeholder="[Required]: Name is required" value="{{targetRest.name}}" required>
                 <small class="form-text invalid-feedback">[Required]: Need at least 1 word</small>
 
               </div>
@@ -28,7 +28,7 @@
                   Name in English
               </label>
               <div class="col-md-8">
-                <input type="text" name="name_en" class="form-control" id="name_en" min="" max="" placeholder="[Required]: Can only input English letters and Number" pattern="[A-Za-z0-9 ]+" value="" required>
+                  <input type="text" name="name_en" class="form-control" id="name_en" min="" max="" placeholder="[Required]: Can only input English letters and Number" pattern="[A-Za-z0-9 ]+" value="{{targetRest.name_en}}" required>
                 <small class="form-text invalid-feedback">[Required]: Can only input English letters and Number</small>
 
               </div>
@@ -40,7 +40,7 @@
                   Category of Restaurant
               </label>
               <div class="col-md-8">
-                <input type="text" name="category" class="form-control" id="category" min="" max="" placeholder="[Required]: Category is required" value="" required>
+                  <input type="text" name="category" class="form-control" id="category" min="" max="" placeholder="[Required]: Category is required" value="{{targetRest.category}}" required>
                 <small class="form-text invalid-feedback">[Required]: Need at least 1 word</small>
 
               </div>
@@ -53,7 +53,7 @@
                   Image of Restaurant
               </label>
               <div class="col-md-8">
-                <input type="url" name="image" class="form-control" id="image" min="" max="" placeholder="[Required]: Please Enter URL Link to Image" value="" required>
+                  <input type="url" name="image" class="form-control" id="image" min="" max="" placeholder="[Required]: Please Enter URL Link to Image" value="{{targetRest.image}}" required>
                 <small class="form-text invalid-feedback">[Required]: Please Enter URL Link to Image</small>
               </div>
             </div>
@@ -64,7 +64,7 @@
                   Location(地址)
               </label>
               <div class="col-md-8">
-                <input type="text" name="location" class="form-control" id="location" min="" max="" placeholder="[Required]: Location is required" value="" required>
+                  <input type="text" name="location" class="form-control" id="location" min="" max="" placeholder="[Required]: Location is required" value="{{targetRest.location}}" required>
                 <small class="form-text invalid-feedback">[Required]: Need at least 1 word</small>
               </div>
             </div>
@@ -75,7 +75,7 @@
                   Phone
               </label>
               <div class="col-md-8">
-                  <input type="text" name="phone" class="form-control" id="phone" min="" max="" placeholder="[Required]: 請用括號加上區碼，手機請加09 " pattern="(\d{2,3}-?|\(\d{2,3}\))\d{3,4}-?\d{4}|09\d{2}(\d{6}|-\d{3}-\d{3})" value="" required>
+                  <input type="text" name="phone" class="form-control" id="phone" min="" max="" placeholder="[Required]: 請用括號加上區碼，手機請加09 " pattern="(\d{2,3}-?|\(\d{2,3}\))\d{3,4}-?\d{4}|09\d{2}(\d{6}|-\d{3}-\d{3})" value="{{targetRest.phone}}" required>
                 <small class="form-text invalid-feedback">請用括號加上區碼，手機請加09</small>
 
               </div>
@@ -86,7 +86,7 @@
                   Google Map Location of Restaurant
               </label>
               <div class="col-md-8">
-                <input type="url" name="google_map" class="form-control" id="google_map" min="" max="" placeholder="[Required]: URL need to meet pattern [https://goo.gl/maps/...]" pattern="https?://goo.gl/maps/.+" value="https://goo.gl/maps/" required>
+                  <input type="url" name="google_map" class="form-control" id="google_map" min="" max="" placeholder="[Required]: URL need to meet pattern [https://goo.gl/maps/...]" pattern="https?://goo.gl/maps/.+" value="{{targetRest.google_map}}" required>
                 <small class="form-text invalid-feedback">[Required]: URL need to meet pattern [https://goo.gl/maps/...]</small>
               </div>
             </div>
@@ -97,25 +97,26 @@
                   Rating(1~5 stars)
               </label>
               <div class="col-md-8">
-                <input type="number" name="rating" class="form-control" id="rating" min="1" max="5" step="0.1" placeholder="[Required]: Number from 1 ~ 5" value="" required>
+                  <input type="number" name="rating" class="form-control" id="rating" min="1" max="5" step="0.1" placeholder="[Required]: Number from 1 ~ 5" value="{{targetRest.rating}}" required>
                 <small class="form-text invalid-feedback">[Required]: Number from 1 ~ 5</small>
               </div>
             </div>
 
 
-            <!--Name-->
+            <!--Desciption-->
             <div class="row mb-3 g-2">
               <label for="description" class="col-md-4 col-form-label">
                   Description
               </label>
               <div class="col-md-8">
-                <textarea id="description" name="description" class="form-control" cols="" rows="5" placeholder="[Required]: Need at least 1 word" required ></textarea>
+                  <textarea id="description" name="description" class="form-control" cols="" rows="5" placeholder="[Required]: Need at least 1 word" required >{{targetRest.description}}</textarea>
                 <small class="form-text invalid-feedback">[Required]: Need at least 1 word</small>
 
               </div>
             </div>
 
-            <button id="submit-btn" class="btn btn-success" type="submit">Generate Restaurant</button>
+
+            <button id="submit-btn" class="btn btn-success" type="submit">Edit Restaurant</button>
           </form>
         </div>
 
