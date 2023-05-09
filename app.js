@@ -71,14 +71,12 @@ app.get("/restaurants/new", (req, res) => {
 
 app.post("/restaurants", (req, res) => {
   const data = req.body
-  console.log(data)
   return Restaurant.find()
     .sort({ _id: -1 })
     .limit(1)
     .lean()
     .then((items) => {
       const newID = items.length ? Number(items[0]["_id"]) + 1 : 1
-      console.log(`New ID is : ${newID}`)
       const newRest = new Restaurant({
         _id: newID,
         name: String(data.name),
