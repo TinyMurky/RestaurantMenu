@@ -1,27 +1,17 @@
 const mongoose = require("mongoose")
 const restaurantSchema = new mongoose.Schema(
   {
-    _id: {
-      type: Number,
-      required: true,
-    },
+    //Delete id implement
     name: {
       type: String,
       required: true,
     },
+    //Remove name_en lowercase and category lowercase
     name_en: {
       type: String,
       required: true,
     },
-    name_en_lowercase: {
-      type: String,
-      required: true,
-    },
     category: {
-      type: String,
-      required: true,
-    },
-    category_lowercase: {
       type: String,
       required: true,
     },
@@ -41,8 +31,9 @@ const restaurantSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    //Rating type changed from string to number
     rating: {
-      type: String,
+      type: Number,
       required: true,
     },
     description: {
