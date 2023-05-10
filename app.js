@@ -145,7 +145,7 @@ app.post("/restaurants/:id/delete", (req, res) => {
 
 //搜尋功能
 app.get("/search", (req, res) => {
-  const keyword = String(req.query.keyword).trim().toLowerCase()
+  const keyword = String(req.query.keyword).trim()
   Restaurant.find({
     $or: [
       { name: { $regex: `${keyword}`, $options: "i" } },
