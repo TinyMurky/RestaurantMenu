@@ -16,24 +16,9 @@ db.on("error", (error) => {
 
 db.once("open", () => {
   console.log("MongoDB creating seed data")
-  for (let rest of restJSON.results) {
-    Restaurant.create({
-      _id: rest.id,
-      name: rest.name,
-      name_en: rest.name_en,
-      name_en_lowercase: rest.name_en.toLowerCase(),
-      category: rest.category,
-      category_lowercase: rest.category.toLowerCase(),
-      image: rest.image,
-      location: rest.location,
-      phone: rest.phone,
-      google_map: rest.google_map,
-      rating: rest.rating,
-      description: rest.description,
-    })
-  }
+  //use insertMany instead create to have
+  Restaurant.insertMany(restJSON.results)
   console.log("done")
-  process.on("exit", function (code) {
-    return console.log(`exiting the code implicitly ${code}`)
-  })
+  //leave node js
+  process.exit()
 })

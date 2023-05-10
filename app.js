@@ -71,28 +71,11 @@ app.get("/restaurants/new", (req, res) => {
 
 app.post("/restaurants", (req, res) => {
   const data = req.body
-  return Restaurant.find()
-    .sort({ _id: -1 })
-    .limit(1)
-    .lean()
-    .then((items) => {
-      const newID = items.length ? Number(items[0]["_id"]) + 1 : 1
-      const newRest = new Restaurant({
-        _id: newID,
-        name: String(data.name),
-        name_en: String(data.name_en),
-        name_en_lowercase: String(data.name_en).toLowerCase(),
-        category: String(data.category),
-        category_lowercase: String(data.category).toLowerCase(),
-        image: String(data.image),
-        location: String(data.location),
-        phone: String(data.phone),
-        google_map: String(data.google_map),
-        rating: Number(data.rating),
-        description: String(data.description),
-      })
-      newRest.save()
-    })
+
+  //更改:直接取用form的資料不做型態更改
+  const newRest = new Restaurant(data)
+  return newRest
+    .save()
     .then(() => res.redirect("/")) //用新的then才可以在確定新增之後才redirect渲染
     .catch((error) => console.error(error))
 })
@@ -142,21 +125,8 @@ app.get("/restaurants/:id/edit", (req, res) => {
 //Update edit
 app.post("/restaurants/:id/edit", (req, res) => {
   const ID = req.params.id
-  const data = req.body
-  const update = {
-    _id: ID,
-    name: String(data.name),
-    name_en: String(data.name_en),
-    name_en_lowercase: String(data.name_en).toLowerCase(),
-    category: String(data.category),
-    category_lowercase: String(data.category).toLowerCase(),
-    image: String(data.image),
-    location: String(data.location),
-    phone: String(data.phone),
-    google_map: String(data.google_map),
-    rating: Number(data.rating),
-    description: String(data.description),
-  }
+  //更改:直接取用form的資料不做型態更改
+  const update = req.body
   return Restaurant.findByIdAndUpdate(ID, update)
     .then(() => res.redirect("/")) //用新的then才可以在確定新增之後才redirect渲染
     .catch((error) => console.error(error))
@@ -169,21 +139,18 @@ app.post("/restaurants/:id/delete", (req, res) => {
     .then((targetRest) => {
       targetRest.deleteOne()
     })
-    .then(() => res.redirect("/")) //用新的then才可以在確定新增之後才redirect渲染
+    .then(() => res.redirect("/"))
     .catch((error) => console.error(error))
 })
 
 //搜尋功能
 app.get("/search", (req, res) => {
-  const keyword = req.query.keyword
-  const keywordLower = keyword.toLowerCase().trim()
+  const keyword = String(req.query.keyword).trim()
   Restaurant.find({
     $or: [
       { name: { $regex: `${keyword}`, $options: "i" } },
-      { name: { $regex: `${keywordLower}`, $options: "i" } },
-      { name_en_lowercase: { $regex: `${keywordLower}`, $options: "i" } },
+      { name_en: { $regex: `${keyword}`, $options: "i" } },
       { category: { $regex: `${keyword}`, $options: "i" } },
-      { category_lowercase: { $regex: `${keywordLower}`, $options: "i" } },
     ],
   })
     .sort("_id")

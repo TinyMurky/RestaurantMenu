@@ -75,9 +75,8 @@
                   Phone
               </label>
               <div class="col-md-8">
-                  <input type="text" name="phone" class="form-control" id="phone" min="" max="" placeholder="[Required]: 請用括號加上區碼，手機請加09 " pattern="(\d{2,3}-?|\(\d{2,3}\))\d{3,4}-?\d{4}|09\d{2}(\d{6}|-\d{3}-\d{3})" value="{{targetRest.phone}}" required>
-                <small class="form-text invalid-feedback">請用括號加上區碼，手機請加09</small>
-
+                <input type="text" name="phone" class="form-control" id="phone" min="" max="" placeholder="[Required]: 請用括號加上區碼或使用空格區分，手機請加09 " pattern="(\d{2,3}[ -]?|\(\d{2,3}\))\d{3,4}[ -]?\d{4}|09\d{2}(\d{6}|[ -]\d{3}[ -]\d{3})" value="" required>
+                <small class="form-text invalid-feedback">請用括號加上區碼或使用空格區分，手機請加09</small>
               </div>
             </div>
             <!--googlemap-->
