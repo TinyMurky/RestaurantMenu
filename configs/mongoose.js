@@ -11,4 +11,4 @@ const db = mongoose.connection
 db.on("error", (error) => console.error(error))
 db.once("open", () => console.log("MongoDB connected currectly."))
 
-module.exports = db
+module.exports = { db, mongoose }
