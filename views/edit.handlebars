@@ -8,7 +8,7 @@
         <div class="card-body">
           <h5 class="card-title">編輯您的餐廳</h5>
           <hr>
-          <form method="POST" action="/restaurants/{{targetRest._id}}/edit" class="needs-validation" novalidate>
+          <form method="POST" action="/restaurants/{{targetRest._id}}?_method=PUT" class="needs-validation" novalidate>
 
             <!--Name-->
             <div class="row mb-3 g-2">
@@ -75,7 +75,7 @@
                   Phone
               </label>
               <div class="col-md-8">
-                <input type="text" name="phone" class="form-control" id="phone" min="" max="" placeholder="[Required]: 請用括號加上區碼或使用空格區分，手機請加09 " pattern="(\d{2,3}[ -]?|\(\d{2,3}\))\d{3,4}[ -]?\d{4}|09\d{2}(\d{6}|[ -]\d{3}[ -]\d{3})" value="" required>
+                  <input type="text" name="phone" class="form-control" id="phone" min="" max="" placeholder="[Required]: 請用括號加上區碼或使用空格區分，手機請加09 " pattern="(\d{2,3}[ -]?|\(\d{2,3}\))\d{3,4}[ -]?\d{4}|09\d{2}(\d{6}|[ -]\d{3}[ -]\d{3})" value="{{targetRest.phone}}" required>
                 <small class="form-text invalid-feedback">請用括號加上區碼或使用空格區分，手機請加09</small>
               </div>
             </div>
