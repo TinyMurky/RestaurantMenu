@@ -13,8 +13,7 @@ const Restaurant = require("./models/restaurant")
 //const restaurant = require("./restaurant.json")
 
 //setip port and hostname
-const port = Number(process.env.PORT) || 3000
-const hostname = "localhost"
+const PORT = process.env.PORT || 3000
 
 // handlebar setting
 app.engine(
@@ -35,6 +34,6 @@ app.use(methodOverride("_method"))
 //start routers
 app.use(routes)
 
-app.listen(port, hostname, () => {
-  console.log(`Server http://${hostname}:${port} started.`)
+app.listen(PORT, () => {
+  console.log(`Server at port ${PORT} started.`)
 })
