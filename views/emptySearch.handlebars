@@ -23,10 +23,9 @@
                                Sort
                           </button>
                           <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="{{#if keyword}}/search?keyword={{keyword}}&{{else}}/?{{/if}}sort=A2Z">A -> Z</a></li>
-                              <li><a class="dropdown-item" href="{{#if keyword}}/search?keyword={{keyword}}&{{else}}/?{{/if}}sort=Z2A">Z -> A</a></li>
-                              <li><a class="dropdown-item" href="{{#if keyword}}/search?keyword={{keyword}}&{{else}}/?{{/if}}sort=category">類別</a></li>
-                              <li><a class="dropdown-item" href="{{#if keyword}}/search?keyword={{keyword}}&{{else}}/?{{/if}}sort=location">地區</a></li>
+                              {{#each sortRules}}
+                                  <li><a class="dropdown-item" href="{{linkOfSort sortKeyword this}}">{{this}}</a></li>
+                              {{/each}}
                           </ul>
                         </div>
                     </div>
