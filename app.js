@@ -13,7 +13,7 @@ const Restaurant = require("./models/restaurant")
 //const restaurant = require("./restaurant.json")
 
 //setip port and hostname
-const port = process.env.PORT || 3000
+const port = Number(process.env.PORT) || 3000
 const hostname = "localhost"
 
 // handlebar setting
