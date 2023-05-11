@@ -17,7 +17,13 @@ const port = 3000
 const hostname = "localhost"
 
 // handlebar setting
-app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }))
+app.engine(
+  "handlebars",
+  exphbs.engine({
+    defaultLayout: "main",
+    helpers: require("./configs/handlebars-helpers"),
+  })
+)
 app.set("view engine", "handlebars")
 
 //app use static and urlencoded

@@ -9,12 +9,30 @@ const setting = {
     title: "我的餐廳",
     stylesheet: "index.css",
     restaurantList: null,
+    sortKeyword: null,
   },
 }
 //home page render
+function sortBy(sortQuery) {
+  setting.index.sortKeyword = sortQuery ? sortQuery.trim() : null
+  switch (sortQuery) {
+  case "Z2A":
+    return { name: -1 }
+    break
+  case "category":
+    return { category: 1 }
+    break
+  case "location":
+    return { location: 1 }
+    break
+  default:
+    return { name: 1 }
+  }
+}
 router.get("/", (req, res) => {
+  const sortBaseOn = sortBy(req.query.sort)
   return Restaurant.find()
-    .sort("_id")
+    .sort(sortBaseOn)
     .lean()
     .then((restaurants) => {
       return (setting.index.restaurantList = restaurants)
@@ -26,6 +44,7 @@ router.get("/", (req, res) => {
 //搜尋功能
 router.get("/search", (req, res) => {
   const keyword = String(req.query.keyword).trim()
+  const sortBaseOn = sortBy(req.query.sort)
   Restaurant.find({
     $or: [
       { name: { $regex: `${keyword}`, $options: "i" } },
@@ -33,7 +52,7 @@ router.get("/search", (req, res) => {
       { category: { $regex: `${keyword}`, $options: "i" } },
     ],
   })
-    .sort("_id")
+    .sort(sortBaseOn)
     .lean()
     .then((searchResults) => {
       //複製一個自己的setting

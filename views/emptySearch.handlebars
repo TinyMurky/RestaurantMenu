@@ -7,12 +7,27 @@
                         <h4 class="mb-2">尋找餐廳：</h4>
                     </div>
                     <div class="input-group">
-                        <a href="/restaurants/new"><button type="button" class="btn btn-major rounded-pill rounded-end">創造餐廳</button></a>
+                        <div class="input-group-append">
+                            <button class="btn btn-major rounded-pill rounded-end" type="submit" id="search-button"><i
+                                    class="fas fa-search"></i></button>
+                        </div>
                         <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類"
                             aria-label="Restaurant Name..." value="{{keyword}}" aria-describedby="search-button">
-                        <div class="input-group-append">
-                            <button class="btn btn-major rounded-pill rounded-start" type="submit" id="search-button"><i
-                                    class="fas fa-search"></i></button>
+                        <!--Search will send sort by last time-->
+                        {{#if sortKeyword}}
+                            <input type="hidden" name="sort" value="{{sortKeyword}}">
+                        {{/if}}
+                        <!--Drop down-->
+                        <div class="dropdown">
+                           <button class="btn btn-major dropdown-toggle rounded-pill rounded-start" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                               Sort
+                          </button>
+                          <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="{{#if keyword}}/search?keyword={{keyword}}&{{else}}/?{{/if}}sort=A2Z">A -> Z</a></li>
+                              <li><a class="dropdown-item" href="{{#if keyword}}/search?keyword={{keyword}}&{{else}}/?{{/if}}sort=Z2A">Z -> A</a></li>
+                              <li><a class="dropdown-item" href="{{#if keyword}}/search?keyword={{keyword}}&{{else}}/?{{/if}}sort=category">類別</a></li>
+                              <li><a class="dropdown-item" href="{{#if keyword}}/search?keyword={{keyword}}&{{else}}/?{{/if}}sort=location">地區</a></li>
+                          </ul>
                         </div>
                     </div>
                 </form>
