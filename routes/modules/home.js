@@ -9,31 +9,14 @@ const setting = {
     title: "我的餐廳",
     stylesheet: "index.css",
     restaurantList: null,
-    keyword: null, //keyword use in search
     sortRules: ["A->Z", "Z->A", "類別", "地區"], //Create Sort Dropdown item
     sortKeyword: null,
   },
 }
 //home page render
-function sortBy(sortQuery) {
-  //mapping dropdown sort query to object pass into sort()
-  setting.index.sortKeyword = sortQuery ? sortQuery.trim() : null // storing sort Keyword and pass into hidden input in search form
-  switch (sortQuery) {
-  case "Z->A":
-    return { name: -1 }
-    break
-  case "類別":
-    return { category: 1 }
-    break
-  case "地區":
-    return { location: 1 }
-    break
-  default:
-    return { name: 1 }
-  }
-}
+const sortBy = require("../../plugins/sortBy").sortBy
 router.get("/", (req, res) => {
-  const sortBaseOn = sortBy(req.query.sort) //Get object of rule pass into sort()
+  const sortBaseOn = sortBy(setting, req.query.sort) //Get object of rule pass into sort()
   return Restaurant.find()
     .sort(sortBaseOn)
     .lean()
@@ -47,7 +30,7 @@ router.get("/", (req, res) => {
 //搜尋功能
 router.get("/search", (req, res) => {
   const keyword = String(req.query.keyword).trim()
-  const sortBaseOn = sortBy(req.query.sort) //Get object of rule pass into sort()
+  const sortBaseOn = sortBy(setting, req.query.sort) //Get object of rule pass into sort()
 
   Restaurant.find({
     $or: [
@@ -61,9 +44,9 @@ router.get("/search", (req, res) => {
     .then((searchResults) => {
       //複製一個自己的setting
       //但是不能複製nest的object要小心
-      setting.index.keyword = keyword
-      console.table(setting.index)
       const searchSetting = { ...setting.index }
+      //一搜尋就把keyword存起來
+      searchSetting.keyword = keyword
       searchSetting.restaurantList = searchResults
 
       if (searchResults.length) {
