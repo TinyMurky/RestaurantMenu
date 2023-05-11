@@ -9,12 +9,16 @@ const setting = {
     title: "我的餐廳",
     stylesheet: "index.css",
     restaurantList: null,
+    sortRules: ["A->Z", "Z->A", "類別", "地區"], //Create Sort Dropdown item
+    sortKeyword: null,
   },
 }
 //home page render
+const sortBy = require("../../plugins/sortBy").sortBy
 router.get("/", (req, res) => {
+  const sortBaseOn = sortBy(setting, req.query.sort) //Get object of rule pass into sort()
   return Restaurant.find()
-    .sort("_id")
+    .sort(sortBaseOn)
     .lean()
     .then((restaurants) => {
       return (setting.index.restaurantList = restaurants)
@@ -26,6 +30,8 @@ router.get("/", (req, res) => {
 //搜尋功能
 router.get("/search", (req, res) => {
   const keyword = String(req.query.keyword).trim()
+  const sortBaseOn = sortBy(setting, req.query.sort) //Get object of rule pass into sort()
+
   Restaurant.find({
     $or: [
       { name: { $regex: `${keyword}`, $options: "i" } },
@@ -33,14 +39,15 @@ router.get("/search", (req, res) => {
       { category: { $regex: `${keyword}`, $options: "i" } },
     ],
   })
-    .sort("_id")
+    .sort(sortBaseOn)
     .lean()
     .then((searchResults) => {
       //複製一個自己的setting
       //但是不能複製nest的object要小心
       const searchSetting = { ...setting.index }
-      searchSetting.restaurantList = searchResults
+      //一搜尋就把keyword存起來
       searchSetting.keyword = keyword
+      searchSetting.restaurantList = searchResults
 
       if (searchResults.length) {
         res.status(200).render("index", searchSetting)

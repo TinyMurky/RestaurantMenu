@@ -12,18 +12,59 @@
 <body>
     <header>
         <!-- navigation -->
-        <nav class="navbar navbar-light bg-light">
+        <nav class="navbar navbar-light bg-light ">
             <div class="container">
                 <a class="navbar-brand" href="/">
                     <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
                         width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
                     我的餐廳清單
                 </a>
+                {{#if (checkIsHome title)}}
+                    <a href="/restaurants/new"><button class="btn btn-outline-danger" type="submit">創造您的餐廳</button></a>
+                {{/if}}
             </div>
         </nav>
 
         <div class="banner"></div>
     </header>
+    {{#if (checkIsHome title)}}
+        <!-- search bar -->
+        <div class="container search-bar">
+            <div class="search-bar-outer">
+                <div class="search-bar-inner">
+                    <form action="/search">
+                        <div class="container m-0 p-0 w-100 d-flex justify-content-between">
+                            <h4 class="mb-2">尋找餐廳：</h4>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <button class="btn btn-major rounded-pill rounded-end" type="submit" id="search-button"><i
+                                        class="fas fa-search"></i></button>
+                            </div>
+                            <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類"
+                                aria-label="Restaurant Name..." value="{{keyword}}" aria-describedby="search-button">
+                            <!--Search will send sort by last time-->
+                            {{#if sortKeyword}}
+                                <input type="hidden" name="sort" value="{{sortKeyword}}">
+                            {{/if}}
+                            <!--Drop down-->
+                            <div class="dropdown">
+                               <button class="btn btn-major dropdown-toggle rounded-pill rounded-start" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                   Sort
+                              </button>
+                              <ul class="dropdown-menu">
+                                  {{#each sortRules}}
+                                      <li><a class="dropdown-item" href="{{linkOfSort ../keyword this}}">{{this}}</a></li>
+                                  {{/each}}
+                              </ul>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    {{/if}}
     {{{body}}}
     <!--bootstap-->
     <script src="/javascripts/popper.min.js"></script>
