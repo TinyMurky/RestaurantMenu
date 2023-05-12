@@ -10,4 +10,31 @@ function linkOfSort(keyword, sortRule) {
     return `/?sort=${sortRule}`
   }
 }
-module.exports = { checkIsHome, linkOfSort }
+function ifCond(v1, operator, v2, options) {
+  //for more if logic
+  switch (operator) {
+  case "==":
+    return v1 == v2 ? options.fn(this) : options.inverse(this)
+  case "===":
+    return v1 === v2 ? options.fn(this) : options.inverse(this)
+  case "!=":
+    return v1 != v2 ? options.fn(this) : options.inverse(this)
+  case "!==":
+    return v1 !== v2 ? options.fn(this) : options.inverse(this)
+  case "<":
+    return v1 < v2 ? options.fn(this) : options.inverse(this)
+  case "<=":
+    return v1 <= v2 ? options.fn(this) : options.inverse(this)
+  case ">":
+    return v1 > v2 ? options.fn(this) : options.inverse(this)
+  case ">=":
+    return v1 >= v2 ? options.fn(this) : options.inverse(this)
+  case "&&":
+    return v1 && v2 ? options.fn(this) : options.inverse(this)
+  case "||":
+    return v1 || v2 ? options.fn(this) : options.inverse(this)
+  default:
+    return options.inverse(this)
+  }
+}
+module.exports = { checkIsHome, linkOfSort, ifCond }

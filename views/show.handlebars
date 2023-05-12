@@ -1,3 +1,4 @@
+{{#if targetRest}}
     <h1 class="mb-1 restaurant-show-title">{{targetRest.name}}</h1>
     <div class="container">
         <div class="row">
@@ -41,3 +42,16 @@
             </div>
         </div>
     </div>
+{{/if}}
+{{#unless targetRest}}
+    {{#if errorMessage}}
+    <div class="container mt-3">
+        <div class="raw">
+            <div class="col-12  d-inline-flex flex-column  justify-content-center align-items-center">
+                <img class="my-3" src="/image/doge.png" alt="" style="height:150px;width:130px;">
+                <h3 style="color:#6C757D;">{{errorMessage}}</h3>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+{{/unless}}

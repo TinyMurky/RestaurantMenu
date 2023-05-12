@@ -1,13 +1,18 @@
-<!--  ./views/index.handlebars -->
-<!--http://localhost:3000/?length=4&lowercase=on&uppercase=on&numbers=on&symbols=on&excludeCharacters=-->
+{{#ifCond targetRest "||" createErrorMessage}}
 <div class="container py-5">
-
   <div class="row">
     <div class="col-12 col-lg-10 col-xl-8 mx-auto">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">編輯您的餐廳</h5>
           <hr>
+          {{#if createErrorMessage}}
+              <div class="alert alert-info" role="alert">
+                  {{#each createErrorMessage}}
+                      <p><span class="mr-2">{{this.path}} error: </span> <code>{{this.message}}</code></p>
+                  {{/each}}
+              </div>
+          {{/if}}
           <form method="POST" action="/restaurants/{{targetRest._id}}?_method=PUT" class="needs-validation" novalidate>
 
             <!--Name-->
@@ -16,7 +21,7 @@
                   Name
               </label>
               <div class="col-md-8">
-                  <input type="text" name="name" class="form-control" id="name" min="" max="" placeholder="[Required]: Name is required" value="{{targetRest.name}}" required>
+                  <input type="text" name="name" class="form-control" id="name" min="" max="" placeholder="[Required]: Name is required" value="{{#if createErrorMessage}}{{errorData.name}}{{else}}{{targetRest.name}}{{/if}}" required>
                 <small class="form-text invalid-feedback">[Required]: Need at least 1 word</small>
 
               </div>
@@ -28,7 +33,7 @@
                   Name in English
               </label>
               <div class="col-md-8">
-                  <input type="text" name="name_en" class="form-control" id="name_en" min="" max="" placeholder="[Required]: Can only input English letters and Number" pattern="[A-Za-z0-9 ]+" value="{{targetRest.name_en}}" required>
+                  <input type="text" name="name_en" class="form-control" id="name_en" min="" max="" placeholder="[Required]: Can only input English letters and Number" pattern="[A-Za-z0-9 ]+" value="{{#if createErrorMessage}}{{errorData.name_en}}{{else}}{{targetRest.name_en}}{{/if}}" required>
                 <small class="form-text invalid-feedback">[Required]: Can only input English letters and Number</small>
 
               </div>
@@ -40,7 +45,7 @@
                   Category of Restaurant
               </label>
               <div class="col-md-8">
-                  <input type="text" name="category" class="form-control" id="category" min="" max="" placeholder="[Required]: Category is required" value="{{targetRest.category}}" required>
+                  <input type="text" name="category" class="form-control" id="category" min="" max="" placeholder="[Required]: Category is required" value="{{#if createErrorMessage}}{{errorData.category}}{{else}}{{targetRest.category}}{{/if}}" required>
                 <small class="form-text invalid-feedback">[Required]: Need at least 1 word</small>
 
               </div>
@@ -53,7 +58,7 @@
                   Image of Restaurant
               </label>
               <div class="col-md-8">
-                  <input type="url" name="image" class="form-control" id="image" min="" max="" placeholder="[Required]: Please Enter URL Link to Image" value="{{targetRest.image}}" required>
+                  <input type="url" name="image" class="form-control" id="image" min="" max="" placeholder="[Required]: Please Enter URL Link to Image" value="{{#if createErrorMessage}}{{errorData.image}}{{else}}{{targetRest.image}}{{/if}}" required>
                 <small class="form-text invalid-feedback">[Required]: Please Enter URL Link to Image</small>
               </div>
             </div>
@@ -64,7 +69,7 @@
                   Location(地址)
               </label>
               <div class="col-md-8">
-                  <input type="text" name="location" class="form-control" id="location" min="" max="" placeholder="[Required]: Location is required" value="{{targetRest.location}}" required>
+                  <input type="text" name="location" class="form-control" id="location" min="" max="" placeholder="[Required]: Location is required" value="{{#if createErrorMessage}}{{errorData.location}}{{else}}{{targetRest.location}}{{/if}}" required>
                 <small class="form-text invalid-feedback">[Required]: Need at least 1 word</small>
               </div>
             </div>
@@ -75,7 +80,7 @@
                   Phone
               </label>
               <div class="col-md-8">
-                  <input type="text" name="phone" class="form-control" id="phone" min="" max="" placeholder="[Required]: 請用括號加上區碼或使用空格區分，手機請加09 " pattern="(\d{2,3}[ -]?|\(\d{2,3}\))\d{3,4}[ -]?\d{4}|09\d{2}(\d{6}|[ -]\d{3}[ -]\d{3})" value="{{targetRest.phone}}" required>
+                  <input type="text" name="phone" class="form-control" id="phone" min="" max="" placeholder="[Required]: 請用括號加上區碼或使用空格區分，手機請加09 " pattern="(\d{2,3}[ -]?|\(\d{2,3}\))\d{3,4}[ -]?\d{4}|09\d{2}(\d{6}|[ -]\d{3}[ -]\d{3})" value="{{#if createErrorMessage}}{{errorData.phone}}{{else}}{{targetRest.phone}}{{/if}}" required>
                 <small class="form-text invalid-feedback">請用括號加上區碼或使用空格區分，手機請加09</small>
               </div>
             </div>
@@ -85,7 +90,7 @@
                   Google Map Location of Restaurant
               </label>
               <div class="col-md-8">
-                  <input type="url" name="google_map" class="form-control" id="google_map" min="" max="" placeholder="[Required]: URL need to meet pattern [https://goo.gl/maps/...]" pattern="https?://goo.gl/maps/.+" value="{{targetRest.google_map}}" required>
+                  <input type="url" name="google_map" class="form-control" id="google_map" min="" max="" placeholder="[Required]: URL need to meet pattern [https://goo.gl/maps/...]" pattern="https?://goo.gl/maps/.+" value="{{#if createErrorMessage}}{{errorData.google_map}}{{else}}{{targetRest.google_map}}{{/if}}" required>
                 <small class="form-text invalid-feedback">[Required]: URL need to meet pattern [https://goo.gl/maps/...]</small>
               </div>
             </div>
@@ -96,7 +101,7 @@
                   Rating(1~5 stars)
               </label>
               <div class="col-md-8">
-                  <input type="number" name="rating" class="form-control" id="rating" min="1" max="5" step="0.1" placeholder="[Required]: Number from 1 ~ 5" value="{{targetRest.rating}}" required>
+                  <input type="number" name="rating" class="form-control" id="rating" min="1" max="5" step="0.1" placeholder="[Required]: Number from 1 ~ 5" value="{{#if createErrorMessage}}{{errorData.rating}}{{else}}{{targetRest.rating}}{{/if}}" required>
                 <small class="form-text invalid-feedback">[Required]: Number from 1 ~ 5</small>
               </div>
             </div>
@@ -108,7 +113,7 @@
                   Description
               </label>
               <div class="col-md-8">
-                  <textarea id="description" name="description" class="form-control" cols="" rows="5" placeholder="[Required]: Need at least 1 word" required >{{targetRest.description}}</textarea>
+                  <textarea id="description" name="description" class="form-control" cols="" rows="5" placeholder="[Required]: Need at least 1 word" required >{{#if createErrorMessage}}{{errorData.description}}{{else}}{{targetRest.description}}{{/if}}</textarea>
                 <small class="form-text invalid-feedback">[Required]: Need at least 1 word</small>
 
               </div>
@@ -127,3 +132,16 @@
     </div>
   </div>
 </div>
+{{/ifCond}}
+{{#unless targetRest}}
+    {{#if renderErrorMessage}}
+    <div class="container mt-3">
+        <div class="raw">
+            <div class="col-12  d-inline-flex flex-column  justify-content-center align-items-center">
+                <img class="my-3" src="/image/doge.png" alt="" style="height:150px;width:150px;border-radius:50%;border:rgba(200,200,200,0.4) solid 5px;">
+                <h3 style="color:#DDDDDD; background-color:rgba(60,60,60,0.3);">{{renderErrorMessage}}</h3>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+{{/unless}}
