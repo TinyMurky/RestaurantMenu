@@ -11,7 +11,7 @@ const restaurantSchema = new mongoose.Schema(
       type: String,
       validate: {
         validator: function (v) {
-          return /[A-Za-z0-9 ]+ /i.test(v)
+          return /[A-Za-z0-9 ]+/i.test(v)
         },
         message: (props) =>
           `${props.value} is not a valid Alphanumaric only name!`,
