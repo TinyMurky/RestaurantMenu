@@ -1,7 +1,8 @@
 const express = require("express")
 const router = express.Router()
 const Restaurant = require("../../models/restaurant")
-//Setting passs to res.render
+
+//Setting passed to res.render
 const setting = {
   show: {
     title: null,
@@ -26,8 +27,7 @@ const setting = {
   },
 }
 
-//Add New Restaurant
-//要放在"/restaurants/:id"之前，不然express會以為new是數字
+//Create New Restaurant
 router.get("/new", (req, res) => {
   Promise.resolve()
     .then(() => {
@@ -38,12 +38,11 @@ router.get("/new", (req, res) => {
       setting.new.renderErrorMessage = error.message
       return res.status(404).render("new", setting.new)
       console.log(error)
-    }) // Errors will be passed to Express.
+    })
 })
 
 router.post("/", (req, res) => {
   const data = req.body
-  //更改:直接取用form的資料不做型態更改
   const newRest = new Restaurant(data)
   return newRest
     .save()
@@ -51,7 +50,7 @@ router.post("/", (req, res) => {
       setting.new.createErrorMessage = null
       setting.new.errorData = null
       res.redirect("/")
-    }) //用新的then才可以在確定新增之後才redirect渲染
+    })
     .catch((error) => {
       setting.new.createErrorMessage = error.errors
       setting.new.errorData = data
@@ -62,14 +61,14 @@ router.post("/", (req, res) => {
     })
 })
 
-//restaurant個別網頁介紹
+//read specific restaurant
 router.get("/:id", (req, res) => {
-  const targetID = req.params.id
-  return Restaurant.findById(targetID)
+  const restaurantID = req.params.id
+  return Restaurant.findById(restaurantID)
     .lean()
     .then((targetRest) => {
       if (targetRest) {
-        setting.show.errorMessage = null //reset error message
+        setting.show.errorMessage = null
         setting.show.targetRest = targetRest
         setting.show.title = String(targetRest.name)
         return res.status(200).render("show", setting.show)
@@ -85,12 +84,11 @@ router.get("/:id", (req, res) => {
 })
 
 //Edit restaurant
-//Render edit page
 router.get("/:id/edit", (req, res) => {
-  const targetID = req.params.id
+  const restaurantID = req.params.id
   const editSetting = { ...setting.new }
   editSetting.title = "編輯您的餐廳"
-  return Restaurant.findById(targetID)
+  return Restaurant.findById(restaurantID)
     .lean()
     .then((targetRest) => {
       if (targetRest) {
@@ -108,22 +106,19 @@ router.get("/:id/edit", (req, res) => {
     })
 })
 
-//Update edit
 router.put("/:id", (req, res) => {
-  const ID = req.params.id
+  const restaurantID = req.params.id
   //更改:直接取用form的資料不做型態更改
   const update = req.body
   const editSetting = { ...setting.new }
   editSetting.title = "編輯您的餐廳"
-  editSetting.targetRest = { _id: ID } //to give id to error form
-  return Restaurant.findByIdAndUpdate(
-    ID,
-    update,
-    { runValidators: true } //enable schema validation check
-  )
+  editSetting.targetRest = { _id: restaurantID } //to give id to error form
+  return Restaurant.findByIdAndUpdate(restaurantID, update, {
+    runValidators: true,
+  })
     .then(() => {
       res.redirect("/")
-    }) //用新的then才可以在確定新增之後才redirect渲染
+    })
     .catch((error) => {
       editSetting.createErrorMessage = error.errors
       editSetting.errorData = update
@@ -136,8 +131,8 @@ router.put("/:id", (req, res) => {
 
 //delete restaurant
 router.delete("/:id", (req, res) => {
-  const ID = req.params.id
-  return Restaurant.findById(ID)
+  const restaurantID = req.params.id
+  return Restaurant.findById(restaurantID)
     .then((targetRest) => {
       if (targetRest) {
         targetRest.deleteOne()
@@ -153,7 +148,6 @@ router.delete("/:id", (req, res) => {
     })
     .catch((error) => {
       setting.emptyPage.errorMessage = error.message
-      //if searchResults裡面是空的跑這行
       res.status(200).render("emptySearch", setting.emptyPage)
       console.error(error)
     })

@@ -1,12 +1,11 @@
+//Schema for Restaurant
 const mongoose = require("mongoose")
 const restaurantSchema = new mongoose.Schema(
   {
-    //Delete id implement
     name: {
       type: String,
       required: [true, "You miss name of your restaurant"],
     },
-    //Remove name_en lowercase and category lowercase
     name_en: {
       type: String,
       validate: {

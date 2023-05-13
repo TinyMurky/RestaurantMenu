@@ -1,21 +1,24 @@
 //express setup
 const express = require("express")
 const app = express()
+
 //handlebars setup
 const exphbs = require("express-handlebars")
-//method override
+
+//method override for put and delete routing
 const methodOverride = require("method-override")
-//require Routes
+
+//import index.js from ./routes for seperating routing
 const routes = require("./routes")
-//MongoDB Connection start
+
+//import mongoose.js file to connect to MongoDB
 require("./configs/mongoose")
 const Restaurant = require("./models/restaurant")
-//const restaurant = require("./restaurant.json")
 
-//setip port and hostname
+//using port giving by enviroment of cloud server, or default 3000
 const PORT = process.env.PORT || 3000
 
-// handlebar setting
+//handlebars setting
 app.engine(
   "handlebars",
   exphbs.engine({
@@ -25,14 +28,11 @@ app.engine(
 )
 app.set("view engine", "handlebars")
 
-//app use static and urlencoded
+//preprocessing request
 app.use(express.static("public"))
-//enable req.body
 app.use(express.urlencoded({ extended: true }))
-//method override by query
 app.use(methodOverride("_method"))
-//start routers
-app.use(routes)
+app.use(routes) // Enable routing to different file.js
 
 app.listen(PORT, () => {
   console.log(`Server at port ${PORT} started.`)

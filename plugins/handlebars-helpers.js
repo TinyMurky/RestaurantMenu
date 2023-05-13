@@ -3,6 +3,7 @@ function checkIsHome(title) {
   return title === "我的餐廳"
 }
 
+//create sort <a href> url
 function linkOfSort(keyword, sortRule) {
   if (keyword) {
     return `/search?keyword=${keyword}&sort=${sortRule}`
@@ -10,8 +11,9 @@ function linkOfSort(keyword, sortRule) {
     return `/?sort=${sortRule}`
   }
 }
+
+// More operator for {{#if}}
 function ifCond(v1, operator, v2, options) {
-  //for more if logic
   switch (operator) {
   case "==":
     return v1 == v2 ? options.fn(this) : options.inverse(this)

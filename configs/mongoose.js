@@ -5,9 +5,6 @@ if (process.env.NODE_ENV !== "Production") {
 mongoose.connect(process.env.MONGODB_URL)
 const db = mongoose.connection
 
-//setup db model
-//
-//db connection Listener
 db.on("error", (error) => console.error(error))
 db.once("open", () => console.log("MongoDB connected currectly."))
 

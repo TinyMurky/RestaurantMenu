@@ -3,13 +3,13 @@ const router = express.Router()
 
 const Restaurant = require("../../models/restaurant")
 
-// index page Setting
+// config for res.render of each routes
 const setting = {
   index: {
     title: "我的餐廳",
     stylesheet: "index.css",
     restaurantList: null,
-    sortRules: ["A->Z", "Z->A", "類別", "地區"], //Create Sort Dropdown item
+    sortRules: ["A->Z", "Z->A", "類別", "地區"],
     sortKeyword: null,
     errorMessage: null,
   },
@@ -17,22 +17,24 @@ const setting = {
 //home page render
 const sortBy = require("../../plugins/sortBy").sortBy
 router.get("/", (req, res) => {
-  const sortBaseOn = sortBy(setting, req.query.sort) //Get object of rule pass into sort()
+  const sortBaseOn = sortBy(setting, req.query.sort) //this function pass an object base on rule to sort restaurants
   return Restaurant.find()
     .sort(sortBaseOn)
     .lean()
     .then((restaurants) => {
       if (restaurants && restaurants.length) {
-        setting.index.errorMessage = null //reset error message if found
+        setting.index.errorMessage = null //reset error message if any restaurant exist
         return (setting.index.restaurantList = restaurants)
       } else {
-        throw new Error("Looks like we didn't have any restaurant.")
+        throw new Error(
+          "Looks like we didn't have any restaurant on our website :("
+        )
       }
     })
     .then(() => res.status(200).render("index", setting.index))
     .catch((error) => {
-      setting.index.errorMessage = error.message
-      res.status(200).render("emptySearch", setting.index)
+      setting.index.errorMessage = error.message //render error message to client
+      res.status(200).render("emptySearch", setting.index) //send error to server
       console.error(error)
     })
 })
@@ -40,10 +42,11 @@ router.get("/", (req, res) => {
 //搜尋功能
 router.get("/search", (req, res) => {
   const keyword = String(req.query.keyword).trim()
-  const sortBaseOn = sortBy(setting, req.query.sort) //Get object of rule pass into sort()
-  const searchSetting = { ...setting.index }
+  const sortBaseOn = sortBy(setting, req.query.sort)
+  const searchSetting = { ...setting.index } //make a copy of setting pervent pollue
   Restaurant.find({
     $or: [
+      // search by case insensitive
       { name: { $regex: `${keyword}`, $options: "i" } },
       { name_en: { $regex: `${keyword}`, $options: "i" } },
       { category: { $regex: `${keyword}`, $options: "i" } },
@@ -52,9 +55,6 @@ router.get("/search", (req, res) => {
     .sort(sortBaseOn)
     .lean()
     .then((searchResults) => {
-      //複製一個自己的setting
-      //但是不能複製nest的object要小心
-      //一搜尋就把keyword存起來
       searchSetting.keyword = keyword
       searchSetting.restaurantList = searchResults
       if (searchResults.length) {
@@ -65,7 +65,6 @@ router.get("/search", (req, res) => {
     })
     .catch((error) => {
       searchSetting.errorMessage = error.message
-      //if searchResults裡面是空的跑這行
       res.status(200).render("emptySearch", searchSetting)
       console.error(error)
     })
