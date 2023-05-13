@@ -67,7 +67,7 @@ const restaurantSchema = new mongoose.Schema(
     rating: {
       type: Number,
       min: [1, "Rating at least 1 star"],
-      max: [5, "Maximate Rating is 5 start"],
+      max: [5, "Maximate Rating is 5 stars"],
       required: [true, "Please rate your star"],
     },
     description: {
