@@ -22,52 +22,21 @@ header {
   filter: blur(3px);
 }
 
-.search-bar .search-bar-outer {
-  margin: 0 auto;
-  max-width: 680px;
-  background-color: #fce2cf;
-  border-radius: 8px;
-  padding: 20px 30px;
-  border: 0;
-  margin-top: -60px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+.main-container{
+  margin-top: 30px;
+  max-width: 720px;
 }
-
-.search-bar .search-bar-inner h4 {
-  color: #9b4b4b;
-}
-
-.form-control::placeholder {
-  color: #aaaaaa;
-  font-size: 0.8rem;
-}
-
-.btn-major {
-  background-color: #9b4b4b;
-  color: white;
-}
-
-.form-control:focus {
-  box-shadow: none;
-  border-color: #ced4da;
-}
-
 .card {
+  border:#ffffff solid 0px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
-
-.restaurant-category {
-  color: #666666;
-  font-size: 0.8rem;
-}
-
-.restaurant-show-title {
-  position: relative;
-  top: -100px;
-  color: white;
-  text-align: center;
-  font-size: 3rem;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+.picture-area{
+  min-height:600px;
+  background: #dddddd center center url('/image/meat_ball.jpeg');
+  background-size: 140%;
+  background-repeat: no-repeat;
+  background-position: 80% 75%;
 }
 
 @media screen and (max-width: 768px) {
