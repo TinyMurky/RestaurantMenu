@@ -92,6 +92,7 @@ h4 {
   align-items: center;
   transition: all 0.8s ease;
   position: relative;
+  background-color: #ffffff;
   border: 2px solid #4592af;
   box-shadow: #4592af 0px 50px 100px -20px,
     #4592af 0px 30px 60px -30px;
@@ -149,5 +150,25 @@ a, a:link {
 @media screen and (max-width: 768px) {
   .restaurant-show-title {
     font-size: 2rem;
+  }
+  .main-container{
+    max-width: 420px;
+  }
+.input-area{
+  margin-top: 1em;
+}
+.icon{
+  width:30px;
+  height:30px;
+  margin-bottom: 0.5em;
+}
+.router-name{
+  font-size: 0.8em;
+}
+h4 {
+  font-size: 0.8em;
+}
+  .picture-area{
+    display: none;
   }
 }
