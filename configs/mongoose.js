@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-if (process.env.NODE_ENV !== "Production") {
+if (process.env.NODE_ENV !== "production") {
   require("dotenv").config({ path: ".env" })
 }
 mongoose.connect(process.env.MONGODB_URL)
