@@ -14,6 +14,8 @@ const session = require("express-session")
 //import index.js from ./routes for seperating routing
 const routes = require("./routes")
 
+//passport setting
+const usePassport = require("./configs/passport")
 //import mongoose.js file to connect to MongoDB
 require("./configs/mongoose")
 const Restaurant = require("./models/restaurant")
@@ -44,6 +46,7 @@ app.use(session({
   resave:false,
   saveUninitialized: true
 }))
+app.use(usePassport)
 app.use(routes) // Enable routing to different file.js
 
 app.listen(PORT, () => {
