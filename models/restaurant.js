@@ -74,6 +74,12 @@ const restaurantSchema = new mongoose.Schema(
       type: String,
       required: [true, "Atleast one word for description, please"],
     },
+    userID:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"User",
+      index:true,
+      required:true,
+    }
   },
   { collection: "A7_restaurants" }
 )
