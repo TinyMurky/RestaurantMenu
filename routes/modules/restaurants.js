@@ -28,36 +28,33 @@ const setting = {
 }
 
 // Create New Restaurant
-router.get('/new', (req, res) => {
-  Promise.resolve()
-    .then(() => {
-      setting.new.renderErrorMessage = null
-      res.render('new', setting.new)
-    })
-    .catch((error) => {
-      setting.new.renderErrorMessage = error.message
-      return res.status(404).render('new', setting.new)
-    })
+router.get('/new', async (req, res) => {
+  try {
+    setting.new.renderErrorMessage = null
+    res.render('new', setting.new)
+  } catch (error) {
+    setting.new.renderErrorMessage = error.message
+    return res.status(404).render('new', setting.new)
+  }
 })
 
-router.post('/', (req, res) => {
-  const data = req.body
-  const newRest = new Restaurant(data)
-  return newRest
-    .save()
-    .then(() => {
-      setting.new.createErrorMessage = null
-      setting.new.errorData = null
-      res.redirect('/')
-    })
-    .catch((error) => {
-      setting.new.createErrorMessage = error.errors
-      setting.new.errorData = data
-      for (const stuff in error.errors) {
-        console.error('[Data Create Error]: ', error.errors[stuff].message)
-      }
-      return res.status(404).render('new', setting.new)
-    })
+router.post('/', async (req, res) => {
+  try {
+    const data = req.body
+    data.userID = req.user._id
+    const newRest = new Restaurant(data)
+    await newRest.save()
+    setting.new.createErrorMessage = null
+    setting.new.errorData = null
+    return res.redirect('/')
+  } catch (error) {
+    setting.new.createErrorMessage = error.errors
+    setting.new.errorData = req.body
+    for (const stuff in error.errors) {
+      console.error('[Data Create Error]: ', error.errors[stuff].message)
+    }
+    return res.status(404).render('new', setting.new)
+  }
 })
 
 // read specific restaurant

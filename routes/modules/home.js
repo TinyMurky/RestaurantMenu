@@ -39,34 +39,35 @@ router.get('/', async (req, res) => {
 })
 
 // 搜尋功能
-router.get('/search', (req, res) => {
-  const keyword = String(req.query.keyword).trim()
-  const sortBaseOn = sortBy(setting, req.query.sort)
-  const searchSetting = { ...setting.index } // make a copy of setting pervent pollue
-  Restaurant.find({
-    $or: [
+router.get('/search', async (req, res) => {
+  try {
+    const keyword = String(req.query.keyword).trim()
+    const sortBaseOn = sortBy(setting, req.query.sort)
+    const userID = req.user._id
+    const searchSetting = { ...setting.index } // make a copy of setting pervent pollue
+    const searchResults = await Restaurant.find({
+      $or: [
       // search by case insensitive
-      { name: { $regex: `${keyword}`, $options: 'i' } },
-      { name_en: { $regex: `${keyword}`, $options: 'i' } },
-      { category: { $regex: `${keyword}`, $options: 'i' } }
-    ]
-  })
-    .sort(sortBaseOn)
-    .lean()
-    .then((searchResults) => {
-      searchSetting.keyword = keyword
-      searchSetting.restaurantList = searchResults
-      if (searchResults.length) {
-        res.status(200).render('index', searchSetting)
-      } else {
-        throw new Error('Wow! Such Empty!')
-      }
-    })
-    .catch((error) => {
-      searchSetting.errorMessage = error.message
-      res.status(200).render('emptySearch', searchSetting)
-      console.error(error)
-    })
+        { name: { $regex: `${keyword}`, $options: 'i' } },
+        { name_en: { $regex: `${keyword}`, $options: 'i' } },
+        { category: { $regex: `${keyword}`, $options: 'i' } }
+      ],
+      userID
+    }).sort(sortBaseOn).lean()
+
+    searchSetting.keyword = keyword
+    searchSetting.restaurantList = searchResults
+    if (searchResults.length) {
+      res.status(200).render('index', searchSetting)
+    } else {
+      throw new Error('Wow! Such Empty!')
+    }
+  } catch (error) {
+    const searchSetting = { ...setting.index } // make a copy of setting pervent pollue
+    searchSetting.errorMessage = error.message
+    res.status(200).render('emptySearch', searchSetting)
+    console.error(error)
+  }
 })
 
 module.exports = router
