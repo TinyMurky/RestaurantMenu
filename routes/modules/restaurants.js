@@ -58,25 +58,24 @@ router.post('/', async (req, res) => {
 })
 
 // read specific restaurant
-router.get('/:id', (req, res) => {
-  const restaurantID = req.params.id
-  return Restaurant.findById(restaurantID)
-    .lean()
-    .then((targetRest) => {
-      if (targetRest) {
-        setting.show.errorMessage = null
-        setting.show.targetRest = targetRest
-        setting.show.title = String(targetRest.name)
-        return res.status(200).render('show', setting.show)
-      } else {
-        throw new Error('Sorry but restaurant not found')
-      }
-    })
-    .catch((error) => {
-      setting.show.errorMessage = 'Sorry but restaurant not found'
-      console.error(error)
-      return res.status(404).render('show', setting.show)
-    })
+router.get('/:id', async (req, res) => {
+  try {
+    const restaurantID = req.params.id
+    const userID = req.user._id
+    const targetRest = await Restaurant.findOne({ _id: restaurantID, userID }).lean()
+    if (targetRest) {
+      setting.show.errorMessage = null
+      setting.show.targetRest = targetRest
+      setting.show.title = String(targetRest.name)
+      return res.status(200).render('show', setting.show)
+    } else {
+      throw new Error('Sorry but restaurant not found')
+    }
+  } catch (error) {
+    setting.show.errorMessage = 'Sorry but restaurant not found'
+    console.error(error)
+    return res.status(404).render('show', setting.show)
+  }
 })
 
 // Edit restaurant
