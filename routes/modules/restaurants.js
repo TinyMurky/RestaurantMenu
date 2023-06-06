@@ -79,71 +79,67 @@ router.get('/:id', async (req, res) => {
 })
 
 // Edit restaurant
-router.get('/:id/edit', (req, res) => {
-  const restaurantID = req.params.id
+router.get('/:id/edit', async (req, res) => {
   const editSetting = { ...setting.new }
-  editSetting.title = '編輯您的餐廳'
-  return Restaurant.findById(restaurantID)
-    .lean()
-    .then((targetRest) => {
-      if (targetRest) {
-        editSetting.targetRest = targetRest
-        return res.status(200).render('edit', editSetting)
-      } else {
-        throw new Error("Sorry we can't found the restaurant you want to edit")
-      }
-    })
-    .catch((error) => {
-      editSetting.renderErrorMessage =
+  try {
+    const userID = req.user._id
+    const restaurantID = req.params.id
+    editSetting.title = '編輯您的餐廳'
+    const targetRest = await Restaurant.findOne({ _id: restaurantID, userID }).lean()
+    if (targetRest) {
+      editSetting.targetRest = targetRest
+      return res.status(200).render('edit', editSetting)
+    } else {
+      throw new Error("Sorry we can't found the restaurant you want to edit")
+    }
+  } catch (error) {
+    editSetting.renderErrorMessage =
         "Sorry we can't found the restaurant you want to edit"
-      return res.status(404).render('edit', editSetting)
-    })
+    return res.status(404).render('edit', editSetting)
+  }
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   const restaurantID = req.params.id
-  // 更改:直接取用form的資料不做型態更改
+  const userID = req.user._id
   const update = req.body
   const editSetting = { ...setting.new }
-  editSetting.title = '編輯您的餐廳'
-  editSetting.targetRest = { _id: restaurantID } // to give id to error form
-  return Restaurant.findByIdAndUpdate(restaurantID, update, {
-    runValidators: true
-  })
-    .then(() => {
-      res.redirect('/')
+  try {
+    editSetting.title = '編輯您的餐廳'
+    editSetting.targetRest = { _id: restaurantID } // to give id to error form
+    await Restaurant.findOneAndUpdate({ _id: restaurantID, userID }, update, {
+      runValidators: true
     })
-    .catch((error) => {
-      editSetting.createErrorMessage = error.errors
-      editSetting.errorData = update
-      for (const stuff in error.errors) {
-        console.error('[Data Create Error]: ', error.errors[stuff].message)
-      }
-      return res.status(404).render('edit', editSetting)
-    })
+    res.redirect('/')
+  } catch (error) {
+    editSetting.createErrorMessage = error.errors
+    editSetting.errorData = update
+    for (const stuff in error.errors) {
+      console.error('[Data Create Error]: ', error.errors[stuff].message)
+    }
+    return res.status(404).render('edit', editSetting)
+  }
 })
 
 // delete restaurant
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   const restaurantID = req.params.id
-  return Restaurant.findById(restaurantID)
-    .then((targetRest) => {
-      if (targetRest) {
-        targetRest.deleteOne()
-      } else {
-        throw new Error(
-          "Sorry we can't found the restaurant you want to delete"
-        )
-      }
-    })
-    .then(() => {
+  const userID = req.user._id
+  try {
+    const targetRest = await Restaurant.findOne({ _id: restaurantID, userID })
+    if (targetRest) {
+      targetRest.deleteOne()
       setting.emptyPage.errorMessage = null
       res.redirect('/')
-    })
-    .catch((error) => {
-      setting.emptyPage.errorMessage = error.message
-      res.status(200).render('emptySearch', setting.emptyPage)
-      console.error(error)
-    })
+    } else {
+      throw new Error(
+        "Sorry we can't found the restaurant you want to delete"
+      )
+    }
+  } catch (error) {
+    setting.emptyPage.errorMessage = error.message
+    res.status(200).render('emptySearch', setting.emptyPage)
+    console.error(error)
+  }
 })
 module.exports = router
