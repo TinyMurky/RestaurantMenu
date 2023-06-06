@@ -9,13 +9,13 @@
           </div>
           <form action="/users/register" method="POST" class="login-form d-flex flex-column">
             <label for="name">您的名字</label>
-            <input type="text" id="name" name="name" class="mb-1" required>
+            <input type="text" id="name" name="name" class="mb-1" value="{{name}}" required>
             <label for="email">Email信箱</label>
-            <input type="email" id="email" name="email" class="mb-1" required>
+            <input type="email" id="email" name="email" class="mb-1" value="{{email}}" required>
             <label for="password">密碼</label>
-            <input type="password" id="password" name="password" class="mb-1" required>
+            <input type="password" id="password" name="password" class="mb-1" value="{{password}}" required>
             <label for="confirmPassword">請再輸入一次密碼</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" class="mb-1" required>
+            <input type="password" id="confirmPassword" name="confirmPassword" class="mb-1" value="{{confirmPassword}}" required>
             <button type="submit" class="btn btn-custom btn-custom-cover"><h4>送出</h4></button>
           </form>
           <div class="other-login mb-5 d-flex flex-column">

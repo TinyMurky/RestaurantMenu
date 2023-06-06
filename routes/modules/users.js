@@ -10,7 +10,7 @@ const stylesheet = {
 
 router.get('/login', (req, res) => {
   if (!req.isAuthenticated()) {
-    res.render('login', { stylesheet: stylesheet.login })
+    res.render('login', { title: '登入我的餐廳', stylesheet: stylesheet.login })
   } else {
     res.redirect('/')
   }
@@ -26,7 +26,7 @@ router.post('/login',
 )
 router.get('/register', (req, res) => {
   if (!req.isAuthenticated()) {
-    res.render('register', { stylesheet: stylesheet.register })
+    res.render('register', { title: '註冊我的餐廳', stylesheet: stylesheet.register })
   } else {
     res.redirect('/')
   }
@@ -48,8 +48,13 @@ router.post('/register', async (req, res) => {
     }
     if (errors.length) {
       res.render('register', {
+        title: '註冊我的餐廳',
         stylesheet: stylesheet.login,
-        register_errors: errors
+        register_errors: errors,
+        name,
+        email,
+        password,
+        confirmPassword
       })
     } else {
       const salt = await bcrypt.genSalt(10)
