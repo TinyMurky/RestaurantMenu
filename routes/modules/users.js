@@ -9,7 +9,11 @@ const stylesheet = {
 }
 
 router.get('/login', (req, res) => {
-  res.render('login', { stylesheet: stylesheet.login })
+  if (!req.isAuthenticated()) {
+    res.render('login', { stylesheet: stylesheet.login })
+  } else {
+    res.redirect('/')
+  }
 })
 router.post('/login',
   passport.authenticate('local', {
@@ -21,7 +25,11 @@ router.post('/login',
   }
 )
 router.get('/register', (req, res) => {
-  res.render('register', { stylesheet: stylesheet.register })
+  if (!req.isAuthenticated()) {
+    res.render('register', { stylesheet: stylesheet.register })
+  } else {
+    res.redirect('/')
+  }
 })
 
 router.post('/register', async (req, res) => {
@@ -58,5 +66,12 @@ router.post('/register', async (req, res) => {
   } catch (error) {
     console.error(error)
   }
+})
+
+router.get('/logout', (req, res, next) => {
+  req.logout(function (err) {
+    if (err) { return next(err) }
+    res.redirect('/users/login')
+  })
 })
 module.exports = router
