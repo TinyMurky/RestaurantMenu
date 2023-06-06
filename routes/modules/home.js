@@ -19,7 +19,6 @@ const sortBy = require('../../plugins/sortBy').sortBy
 router.get('/', async (req, res) => {
   try {
     const userID = req.user._id
-    console.log('user', req.user)
     const sortBaseOn = sortBy(setting, req.query.sort) // this function pass an object base on rule to sort restaurants
     const restaurants = await Restaurant.find({ userID }).sort(sortBaseOn).lean()
     if (restaurants && restaurants.length) {
