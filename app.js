@@ -53,6 +53,8 @@ usePassport(app)
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
+  res.locals.login_error = req.flash('login_error')
+  res.locals.not_login_warning = req.flash('not_login_warning')
   next()
 })
 app.use(routes) // Enable routing to different file.js

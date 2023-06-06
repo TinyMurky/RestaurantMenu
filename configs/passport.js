@@ -13,16 +13,18 @@ const localStrategy = new LocalStrategy(
     try {
       const user = await User.findOne({ email })
       if (!user) {
+        req.flash('login_error', '此Email尚未創建帳號')
         return done(null, false, { message: 'Email not found.' })
       }
       const passwordCorrect = await bcrypt.compare(password, user.password)
-      console.log('password matching: ', passwordCorrect)
       if (!passwordCorrect) {
+        req.flash('login_error', '密碼錯誤')
         return done(null, false, { message: "Email and password didn't match" })
       } else {
         return done(null, user, { message: 'Login success!' })
       }
     } catch (error) {
+      req.flash('login_error', error.message)
       return done(error, null)
     }
   })

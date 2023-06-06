@@ -147,6 +147,10 @@ a, a:link {
   margin: auto 0.3em;
 }
 
+.alert {
+  font-size: 0.8em;
+}
+
 @media screen and (max-width: 768px) {
   .restaurant-show-title {
     font-size: 2rem;

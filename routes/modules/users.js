@@ -41,9 +41,8 @@ router.post('/register', async (req, res) => {
     if (errors.length) {
       res.render('register', {
         stylesheet: stylesheet.login,
-        errors
+        register_errors: errors
       })
-      return
     } else {
       const salt = await bcrypt.genSalt(10)
       const hash = await bcrypt.hash(password, salt)
