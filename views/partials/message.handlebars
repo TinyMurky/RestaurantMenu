@@ -17,6 +17,12 @@
             <p class="my-0 py-0">{{register_success}}</p> 
         </div>
     {{/if}}
+    {{#if logout_success}}
+        <div class="alert alert-dismissible alert-success py-0 d-flex align-items-center">
+            <button type="button" class="btn-close pt-0 mt-0 pb-2" data-bs-dismiss="alert"></button>
+            <p class="my-0 py-0">{{logout_success}}</p> 
+        </div>
+    {{/if}}
 {{/if}}
 {{#if (checkIsRegister title)}}
     {{#if register_errors}}

@@ -56,6 +56,7 @@ app.use((req, res, next) => {
   res.locals.login_error = req.flash('login_error')
   res.locals.not_login_warning = req.flash('not_login_warning')
   res.locals.register_success = req.flash('register_success')
+  res.locals.logout_success = req.flash('logout_success')
   next()
 })
 app.use(routes) // Enable routing to different file.js
