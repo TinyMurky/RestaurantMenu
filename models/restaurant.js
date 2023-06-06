@@ -1,10 +1,10 @@
-//Schema for Restaurant
-const mongoose = require("mongoose")
+// Schema for Restaurant
+const mongoose = require('mongoose')
 const restaurantSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "You miss name of your restaurant"],
+      required: [true, 'You miss name of your restaurant']
     },
     name_en: {
       type: String,
@@ -13,13 +13,13 @@ const restaurantSchema = new mongoose.Schema(
           return /[A-Za-z0-9 ]+/i.test(v)
         },
         message: (props) =>
-          `${props.value} is not a valid Alphanumaric only name!`,
+          `${props.value} is not a valid Alphanumaric only name!`
       },
-      required: [true, "English name is required"],
+      required: [true, 'English name is required']
     },
     category: {
       type: String,
-      required: [true, "Your restaurant need to have som kind of category"],
+      required: [true, 'Your restaurant need to have som kind of category']
     },
     image: {
       type: String,
@@ -29,16 +29,16 @@ const restaurantSchema = new mongoose.Schema(
             v
           )
         },
-        message: (props) => `${props.value} is not a valid URL for image!`,
+        message: (props) => `${props.value} is not a valid URL for image!`
       },
-      required: [true, "Image URL is required, otherwise it will be ugly"],
+      required: [true, 'Image URL is required, otherwise it will be ugly']
     },
     location: {
       type: String,
       required: [
         true,
-        "Your restaurant need a location, otherwise no customer will show up",
-      ],
+        'Your restaurant need a location, otherwise no customer will show up'
+      ]
     },
     phone: {
       type: String,
@@ -48,9 +48,9 @@ const restaurantSchema = new mongoose.Schema(
             v
           )
         },
-        message: (props) => `${props.value} is not a valid phone number!`,
+        message: (props) => `${props.value} is not a valid phone number!`
       },
-      required: [true, "Phone number is required"],
+      required: [true, 'Phone number is required']
     },
     google_map: {
       type: String,
@@ -59,29 +59,29 @@ const restaurantSchema = new mongoose.Schema(
           return /https?:\/\/goo\.gl\/maps\//i.test(v)
         },
         message: (props) =>
-          `${props.value} is not a valid Google map sharing link`,
+          `${props.value} is not a valid Google map sharing link`
       },
-      required: [true, "Google map link is required"],
+      required: [true, 'Google map link is required']
     },
-    //Rating type changed from string to number
+    // Rating type changed from string to number
     rating: {
       type: Number,
-      min: [1, "Rating at least 1 star"],
-      max: [5, "Maximate Rating is 5 stars"],
-      required: [true, "Please rate your star"],
+      min: [1, 'Rating at least 1 star'],
+      max: [5, 'Maximate Rating is 5 stars'],
+      required: [true, 'Please rate your star']
     },
     description: {
       type: String,
-      required: [true, "Atleast one word for description, please"],
+      required: [true, 'Atleast one word for description, please']
     },
-    userID:{
+    userID: {
       type: mongoose.Schema.Types.ObjectId,
-      ref:"User",
-      index:true,
-      required:true,
+      ref: 'User',
+      index: true,
+      required: true
     }
   },
-  { collection: "A7_restaurants" }
+  { collection: 'A7_restaurants' }
 )
 
-module.exports = mongoose.model("Restaurant", restaurantSchema)
+module.exports = mongoose.model('Restaurant', restaurantSchema)
