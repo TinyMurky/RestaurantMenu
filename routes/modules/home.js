@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
       setting.index.restaurantList = restaurants
     } else {
       throw new Error(
-        "Looks like we didn't have any restaurant on our website :("
+        "Looks like You didn't have any restaurant on our website :("
       )
     }
     res.status(200).render('index', setting.index)
