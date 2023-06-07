@@ -42,7 +42,7 @@
       "name_en": "A Point Steak & Bar",
       "category": "美式",
       "image": "https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/5630/04.jpg",
-      "location": "台北市信義區忠孝東路五段 139 號 2 樓",
+      "location": "110 台北市信義區忠孝東路五段 139 號 2 樓",
       "phone": "02 2756 7788",
       "google_map": "https://goo.gl/maps/6Lq7U2ahp152",
       "rating": 4.2,
@@ -95,42 +95,6 @@
       "google_map": "https://goo.gl/maps/V9mKwVJ4s5v",
       "rating": 4.7,
       "description": "我們希望帶給您的，不只是啤酒，有美食，還有一份對生活的熱情。 義大利語「Bravo」的原意─「喝采」、「讚揚」， 我想著如果有一個大家都能輕鬆品嚐美酒、享受美食的地方，那就真的是太棒了！ 因為這個念頭，加上一股對比利時啤酒的熱情， 於是「Bravo Beer布娜飛比利時啤酒餐廳」在2006年誕生了..."
-    },
-    {
-        "id" : 9,
-        "name" : "凱留漢堡屋",
-        "name_en" : "Kyaru",
-        "category" : "公主餐廳",
-        "image" : "https://truth.bahamut.com.tw/s01/202210/84a74530a6b9e6e69c6acc4b0ab81cef.JPG",
-        "location" : "凱留家",
-        "phone" : "0212345678",
-        "google_map" : "https://goo.gl/maps/hiosKR9HEDru7Ywk8",
-        "rating" : 5,
-        "description" : "凱留喜歡吃漢堡，無產凱留萬歲"
-    },
-    {
-        "id" : 10,
-        "name" : "王記西米露",
-        "name_en" : "Wang Semen Liquid",
-        "category" : "甜湯",
-        "image" : "https://media.tenor.com/bD_aC8rYlOUAAAAd/%E7%8E%8B%E5%B8%8C%E9%8A%98-cming-wang.gif",
-        "location" : "中壢冒險樹屋",
-        "phone" : "(02)0000000",
-        "google_map" : "https://goo.gl/maps/n",
-        "rating" : 5,
-        "description" : "希米露"
-    },
-    {
-        "id" : 11,
-        "name" : "Japari咖啡廳",
-        "name_en" : "Japari Cafe",
-        "category" : "咖啡",
-        "image" : "https://truth.bahamut.com.tw/s01/202305/6a0c6b5fac239cb0d72706c09adf3460.JPG",
-        "location" : "加帕里公園",
-        "phone" : "(00)7867867",
-        "google_map" : "https://goo.gl/maps/japaripark",
-        "rating" : 5,
-        "description" : "享受羊駝小姐精心調配的飲品\r\n\r\n招牌:羊駝奶茶"
     }
   ]
 }
