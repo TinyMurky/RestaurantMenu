@@ -19,9 +19,14 @@
                         width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
                     我的餐廳清單
                 </a>
-                {{#if (checkIsHome title)}}
-                    <a href="/restaurants/new"><button class="btn btn-outline-danger" type="submit">創造您的餐廳</button></a>
-                {{/if}}
+                <div>
+                    {{#if (checkIsHome title)}}
+                        <a href="/restaurants/new"><button class="btn btn-outline-success" type="submit">創造您的餐廳</button></a>
+                    {{/if}}
+                    {{#if isAuthenticated}}
+                        <a href="/users/logout"><button class="btn btn-outline-danger" type="submit">登出</button></a>
+                    {{/if}}
+                </div>
             </div>
         </nav>
 
