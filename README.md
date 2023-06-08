@@ -59,7 +59,7 @@
     ```
     - FACEBOOK_APP_ID, FACEBOOK_APP_SECRET 請於[meta for developer](https://developers.facebook.com/)申請一組應用程式編號與應用程式密鑰
     ![](./README/Facebook_developer.png)
-    - GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET 請於 [Github register a new OAuth application](https://github.com/settings/applications/new) 申請一組Client ID與Client secrets，申請時請於`Authorization callback URL` 填寫`http://localhost:3000/auth/github/callback
+    - GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET 請於 [Github register a new OAuth application](https://github.com/settings/applications/new) 申請一組Client ID與Client secrets，申請時請於`Authorization callback URL` 填寫`http://localhost:3000/auth/github/callback`
     ![](./README/Github_developer.png)
     - GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET請於 [Google Developers Console](https://console.cloud.google.com/projectselector2/apis/dashboard?pli=1&supportedpurview=project)申請一組OAuth 2.0用戶端ID與金鑰，設定時`已授權的重新導向URI`請填寫`http://localhost:3000/auth/google/callback`
     ![](./README/Google_developer.png)
