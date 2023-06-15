@@ -77,7 +77,7 @@ db.once('open', async () => {
         }
       })
       await Promise.all(restPromises)
-      console.log('補完備刪除的資訊')
+      console.log('補完被刪除的資訊')
     }
   }
   if (mongoose.connection.readyState === 1) {
